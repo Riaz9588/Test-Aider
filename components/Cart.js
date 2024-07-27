@@ -1,4 +1,3 @@
-import { Box, Button, Heading, Text, VStack, HStack } from '@chakra-ui/react'
 import useCartStore from '../store/cartStore'
 
 export default function Cart() {
@@ -7,29 +6,39 @@ export default function Cart() {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return (
-    <Box>
-      <Heading as="h2" size="lg" mb={4}>Your Cart</Heading>
+    <div className="bg-white shadow-md rounded-lg p-6">
+      <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
       {items.length === 0 ? (
-        <Text>Your cart is empty</Text>
+        <p>Your cart is empty</p>
       ) : (
-        <VStack align="stretch" spacing={4}>
+        <div className="space-y-4">
           {items.map((item) => (
-            <HStack key={item.id} justify="space-between">
-              <Text>{item.title} (x{item.quantity})</Text>
-              <HStack>
-                <Text>${(item.price * item.quantity).toFixed(2)}</Text>
-                <Button size="sm" colorScheme="red" onClick={() => removeItem(item.id)}>Remove</Button>
-              </HStack>
-            </HStack>
+            <div key={item.id} className="flex justify-between items-center">
+              <span>{item.title} (x{item.quantity})</span>
+              <div>
+                <span className="mr-2">${(item.price * item.quantity).toFixed(2)}</span>
+                <button 
+                  className="bg-red-500 text-white px-2 py-1 rounded text-sm"
+                  onClick={() => removeItem(item.id)}
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
           ))}
-          <HStack justify="space-between">
-            <Text fontWeight="bold">Total:</Text>
-            <Text fontWeight="bold">${total.toFixed(2)}</Text>
-          </HStack>
-          <Button colorScheme="green">Checkout</Button>
-          <Button colorScheme="red" onClick={clearCart}>Clear Cart</Button>
-        </VStack>
+          <div className="flex justify-between font-bold">
+            <span>Total:</span>
+            <span>${total.toFixed(2)}</span>
+          </div>
+          <button className="w-full bg-green-500 text-white py-2 rounded">Checkout</button>
+          <button 
+            className="w-full bg-red-500 text-white py-2 rounded"
+            onClick={clearCart}
+          >
+            Clear Cart
+          </button>
+        </div>
       )}
-    </Box>
+    </div>
   )
 }

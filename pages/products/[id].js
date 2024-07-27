@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Box, Heading, Text, Image, Button } from '@chakra-ui/react'
+import Image from 'next/image'
 import axios from 'axios'
 import useCartStore from '../../store/cartStore'
 
@@ -24,15 +24,22 @@ export default function Product() {
     }
   }, [id])
 
-  if (!product) return <Box>Loading...</Box>
+  if (!product) return <div className="text-center py-10">Loading...</div>
 
   return (
-    <Box maxWidth="800px" margin="auto" p={4}>
-      <Heading as="h1" size="xl" mb={4}>{product.title}</Heading>
-      <Image src={product.image} alt={product.title} maxHeight="400px" objectFit="contain" mb={4} />
-      <Text fontSize="xl" fontWeight="bold" mb={2}>${product.price.toFixed(2)}</Text>
-      <Text mb={4}>{product.description}</Text>
-      <Button colorScheme="blue" onClick={() => addItem(product)}>Add to Cart</Button>
-    </Box>
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
+      <div className="mb-4 relative h-96">
+        <Image src={product.image} alt={product.title} layout="fill" objectFit="contain" />
+      </div>
+      <p className="text-2xl font-bold mb-2">${product.price.toFixed(2)}</p>
+      <p className="mb-4">{product.description}</p>
+      <button 
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        onClick={() => addItem(product)}
+      >
+        Add to Cart
+      </button>
+    </div>
   )
 }

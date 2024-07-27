@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Box, Grid, Heading, Button } from '@chakra-ui/react'
 import axios from 'axios'
 import useCartStore from '../store/cartStore'
 
@@ -21,23 +20,26 @@ export default function ProductList() {
   }, [])
 
   return (
-    <Box>
-      <Heading as="h2" size="xl" mb={6}>Our Products</Heading>
-      <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
+    <div>
+      <h2 className="text-3xl font-bold mb-6">Our Products</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <Box key={product.id} borderWidth="1px" borderRadius="lg" p={4}>
-            <Link href={`/products/${product.id}`} passHref>
-              <Box as="a" fontWeight="semibold" fontSize="lg" mb={2}>
+          <div key={product.id} className="border rounded-lg p-4">
+            <Link href={`/products/${product.id}`}>
+              <a className="font-semibold text-lg mb-2 hover:text-blue-600">
                 {product.title}
-              </Box>
+              </a>
             </Link>
-            <Box>${product.price.toFixed(2)}</Box>
-            <Button colorScheme="blue" mt={2} onClick={() => addItem(product)}>
+            <p className="mb-2">${product.price.toFixed(2)}</p>
+            <button 
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              onClick={() => addItem(product)}
+            >
               Add to Cart
-            </Button>
-          </Box>
+            </button>
+          </div>
         ))}
-      </Grid>
-    </Box>
+      </div>
+    </div>
   )
 }

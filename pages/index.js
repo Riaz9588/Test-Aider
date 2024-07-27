@@ -1,32 +1,31 @@
 import Head from 'next/head'
-import { Box, Container, Heading, Flex } from '@chakra-ui/react'
 import ProductList from '../components/ProductList'
 import Cart from '../components/Cart'
 
 export default function Home() {
   return (
-    <Box>
+    <div className="min-h-screen flex flex-col">
       <Head>
         <title>Next.js E-commerce</title>
         <meta name="description" content="Next.js E-commerce site" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxW="container.xl" py={8}>
-        <Heading as="h1" size="2xl" mb={8} textAlign="center">Welcome to our E-commerce Store</Heading>
-        <Flex direction={{ base: 'column', md: 'row' }} gap={8}>
-          <Box flex={3}>
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold mb-8 text-center">Welcome to our E-commerce Store</h1>
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="md:w-3/4">
             <ProductList />
-          </Box>
-          <Box flex={1}>
+          </div>
+          <div className="md:w-1/4">
             <Cart />
-          </Box>
-        </Flex>
-      </Container>
+          </div>
+        </div>
+      </main>
 
-      <Box as="footer" textAlign="center" py={4} bg="gray.100">
+      <footer className="bg-gray-100 text-center py-4">
         <p>© 2023 Next.js E-commerce</p>
-      </Box>
-    </Box>
+      </footer>
+    </div>
   )
 }
