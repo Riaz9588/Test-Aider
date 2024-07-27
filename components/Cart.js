@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import useCartStore from '../store/cartStore'
 import Image from 'next/image'
+import useToast from '../hooks/useToast'
 
 export default function Cart() {
   const { items, removeItem, clearCart } = useCartStore()
+  const { showToast } = useToast()
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
@@ -35,7 +37,10 @@ export default function Cart() {
                 <p className="font-semibold text-gray-800">${(item.price * item.quantity).toFixed(2)}</p>
                 <button 
                   className="text-red-500 hover:text-red-700 text-sm"
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => {
+                    removeItem(item.id)
+                    showToast(`${item.title} removed from cart`, 'error')
+                  }}
                 >
                   Remove
                 </button>
@@ -53,7 +58,10 @@ export default function Cart() {
           </Link>
           <button 
             className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors duration-300 mt-2"
-            onClick={clearCart}
+            onClick={() => {
+              clearCart()
+              showToast('Cart cleared', 'error')
+            }}
           >
             Clear Cart
           </button>

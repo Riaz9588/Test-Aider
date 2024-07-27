@@ -4,6 +4,7 @@ import Image from 'next/image'
 import axios from 'axios'
 import useCartStore from '../store/cartStore'
 import SkeletonLoader from './SkeletonLoader'
+import useToast from '../hooks/useToast'
 
 export default function ProductList() {
   const [products, setProducts] = useState([])
@@ -12,6 +13,7 @@ export default function ProductList() {
   const [totalPages, setTotalPages] = useState(1)
   const [loading, setLoading] = useState(true)
   const addItem = useCartStore((state) => state.addItem)
+  const { showToast } = useToast()
 
   const productsPerPage = 12
 
@@ -89,7 +91,10 @@ export default function ProductList() {
                   </p>
                   <button 
                     className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center"
-                    onClick={() => addItem(product)}
+                    onClick={() => {
+                      addItem(product)
+                      showToast(`${product.title} added to cart`, 'success')
+                    }}
                   >
                     <i className="fas fa-cart-plus mr-2"></i>
                     Add to Cart

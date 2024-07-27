@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import useToast from '../hooks/useToast'
 
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
+  const { showToast } = useToast()
 
   useEffect(() => {
     // Check if user is already logged in
@@ -20,9 +22,10 @@ export default function Login() {
       if (typeof window !== 'undefined') {
         localStorage.setItem('isLoggedIn', 'true')
       }
+      showToast('Login successful', 'success')
       router.push('/')
     } else {
-      alert('Invalid credentials')
+      showToast('Invalid credentials', 'error')
     }
   }
 
