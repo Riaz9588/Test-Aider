@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #1a5f7a;
     color: #fff;
     text-align: center;
     padding: 1rem;
@@ -28,7 +28,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: #a8dadc;
     text-decoration: none;
 }
 
@@ -47,16 +47,16 @@ article {
 }
 
 h2 {
-    color: #333;
+    color: #1d3557;
 }
 
 h3 {
-    color: #444;
+    color: #2a6f97;
 }
 
 .read-more {
     display: inline-block;
-    background-color: #333;
+    background-color: #457b9d;
     color: #fff;
     padding: 5px 10px;
     text-decoration: none;
@@ -66,6 +66,6 @@ h3 {
 footer {
     text-align: center;
     padding: 10px;
-    background-color: #333;
+    background-color: #1a5f7a;
     color: #fff;
 }
