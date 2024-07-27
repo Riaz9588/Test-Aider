@@ -27,7 +27,12 @@ export default function ProductList() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">Our Products</h2>
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-3xl font-bold text-gray-800">Our Products</h2>
+        <Link href="/categories">
+          <a className="text-blue-500 hover:text-blue-600">View All Categories</a>
+        </Link>
+      </div>
       <div className="mb-8">
         <input
           type="text"

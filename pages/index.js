@@ -11,11 +11,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-4xl font-bold text-gray-800">Next.js E-commerce</h1>
-        </div>
-      </header>
 
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">

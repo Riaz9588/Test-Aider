@@ -37,9 +37,11 @@ export default function Cart() {
             <span>Total:</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300">
-            Checkout
-          </button>
+          <Link href="/checkout">
+            <a className="block w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300 text-center">
+              Checkout
+            </a>
+          </Link>
           <button 
             className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors duration-300 mt-2"
             onClick={clearCart}
