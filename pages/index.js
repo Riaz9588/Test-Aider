@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import ProductList from '../components/ProductList'
 import Cart from '../components/Cart'
+import ProductSlider from '../components/ProductSlider'
 
 export default function Home() {
   return (
@@ -11,8 +12,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
       <main className="flex-grow container mx-auto px-4 py-8">
+        <ProductSlider />
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-3/4">
             <ProductList />
