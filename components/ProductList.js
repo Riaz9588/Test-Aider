@@ -25,7 +25,7 @@ export default function ProductList() {
       } catch (error) {
         console.error('Error fetching products:', error)
       } finally {
-        setLoading(false)
+        setTimeout(() => setLoading(false), 1000) // Simulate loading delay
       }
     }
     fetchProducts()

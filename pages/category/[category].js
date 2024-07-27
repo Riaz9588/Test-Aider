@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
 import useCartStore from '../../store/cartStore'
+import SkeletonLoader from '../../components/SkeletonLoader'
 
 export default function CategoryProducts() {
   const router = useRouter()
@@ -22,14 +23,23 @@ export default function CategoryProducts() {
         } catch (error) {
           console.error('Error fetching category products:', error)
         } finally {
-          setLoading(false)
+          setTimeout(() => setLoading(false), 1000) // Simulate loading delay
         }
       }
       fetchCategoryProducts()
     }
   }, [category])
 
-  if (loading) return <div className="text-center py-10">Loading...</div>
+  if (loading) return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8 text-center text-gray-800 capitalize">{category} Products</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <SkeletonLoader key={index} />
+        ))}
+      </div>
+    </div>
+  )
 
   return (
     <div className="container mx-auto px-4 py-8">

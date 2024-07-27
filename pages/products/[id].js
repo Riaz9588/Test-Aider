@@ -3,28 +3,41 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
 import useCartStore from '../../store/cartStore'
+import SkeletonLoader from '../../components/SkeletonLoader'
 
 export default function Product() {
   const router = useRouter()
   const { id } = router.query
   const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
   const addItem = useCartStore((state) => state.addItem)
 
   useEffect(() => {
     if (id) {
       const fetchProduct = async () => {
+        setLoading(true)
         try {
           const response = await axios.get(`https://dummyjson.com/products/${id}`)
           setProduct(response.data)
         } catch (error) {
           console.error('Error fetching product:', error)
+        } finally {
+          setTimeout(() => setLoading(false), 1000) // Simulate loading delay
         }
       }
       fetchProduct()
     }
   }, [id])
 
-  if (!product) return <div className="text-center py-10">Loading...</div>
+  if (loading) return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <SkeletonLoader />
+      </div>
+    </div>
+  )
+
+  if (!product) return <div className="text-center py-10">Product not found</div>
 
   return (
     <div className="container mx-auto px-4 py-8">
