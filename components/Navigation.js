@@ -1,11 +1,18 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 export default function Navigation() {
   const router = useRouter()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true')
+  }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn')
+    setIsLoggedIn(false)
     router.push('/login')
   }
 
@@ -24,7 +31,7 @@ export default function Navigation() {
             </Link>
           </li>
           <li>
-            {localStorage.getItem('isLoggedIn') ? (
+            {isLoggedIn ? (
               <button
                 onClick={handleLogout}
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 export default function Login() {
@@ -6,11 +6,20 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const router = useRouter()
 
+  useEffect(() => {
+    // Check if user is already logged in
+    if (typeof window !== 'undefined' && localStorage.getItem('isLoggedIn') === 'true') {
+      router.push('/')
+    }
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     // This is a simplified login. In a real app, you'd validate against a backend.
     if (username === 'user' && password === 'password') {
-      localStorage.setItem('isLoggedIn', 'true')
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('isLoggedIn', 'true')
+      }
       router.push('/')
     } else {
       alert('Invalid credentials')
