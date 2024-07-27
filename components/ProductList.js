@@ -30,20 +30,24 @@ export default function ProductList() {
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold text-gray-800">Our Products</h2>
         <Link href="/categories">
-          <a className="text-blue-500 hover:text-blue-600">View All Categories</a>
+          <a className="text-blue-500 hover:text-blue-600 flex items-center">
+            <span>View All Categories</span>
+            <i className="fas fa-chevron-right ml-2"></i>
+          </a>
         </Link>
       </div>
-      <div className="mb-8">
+      <div className="mb-8 relative">
         <input
           type="text"
           placeholder="Search products..."
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <i className="fas fa-search absolute left-3 top-3 text-gray-400"></i>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <div key={product.id} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
             <div className="relative h-48">
               <Image 
@@ -59,11 +63,15 @@ export default function ProductList() {
                   {product.title}
                 </a>
               </Link>
-              <p className="text-gray-600 mb-2">${product.price.toFixed(2)}</p>
+              <p className="text-gray-600 mb-2 flex items-center">
+                <i className="fas fa-tag mr-2 text-blue-500"></i>
+                ${product.price.toFixed(2)}
+              </p>
               <button 
-                className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300"
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center"
                 onClick={() => addItem(product)}
               >
+                <i className="fas fa-cart-plus mr-2"></i>
                 Add to Cart
               </button>
             </div>
