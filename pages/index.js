@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
 
       <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">Welcome to our E-commerce Store</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center">Welcome to our Amazing E-commerce Store</h1>
         <div className="flex flex-col md:flex-row gap-8">
           <div className="md:w-3/4">
             <ProductList />
