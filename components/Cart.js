@@ -1,4 +1,5 @@
 import useCartStore from '../store/cartStore'
+import Image from 'next/image'
 
 export default function Cart() {
   const { items, removeItem, clearCart } = useCartStore()
@@ -6,19 +7,25 @@ export default function Cart() {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Your Cart</h2>
       {items.length === 0 ? (
-        <p>Your cart is empty</p>
+        <p className="text-gray-600">Your cart is empty</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {items.map((item) => (
-            <div key={item.id} className="flex justify-between items-center">
-              <span>{item.title} (x{item.quantity})</span>
-              <div>
-                <span className="mr-2">${(item.price * item.quantity).toFixed(2)}</span>
+            <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
+              <div className="relative h-16 w-16 flex-shrink-0">
+                <Image src={item.thumbnail} alt={item.title} layout="fill" objectFit="cover" className="rounded" />
+              </div>
+              <div className="flex-grow">
+                <h3 className="font-semibold text-gray-800">{item.title}</h3>
+                <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+              </div>
+              <div className="text-right">
+                <p className="font-semibold text-gray-800">${(item.price * item.quantity).toFixed(2)}</p>
                 <button 
-                  className="bg-red-500 text-white px-2 py-1 rounded text-sm"
+                  className="text-red-500 hover:text-red-700 text-sm"
                   onClick={() => removeItem(item.id)}
                 >
                   Remove
@@ -26,13 +33,15 @@ export default function Cart() {
               </div>
             </div>
           ))}
-          <div className="flex justify-between font-bold">
+          <div className="flex justify-between font-bold text-lg text-gray-800 pt-4">
             <span>Total:</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <button className="w-full bg-green-500 text-white py-2 rounded">Checkout</button>
+          <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300">
+            Checkout
+          </button>
           <button 
-            className="w-full bg-red-500 text-white py-2 rounded"
+            className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors duration-300 mt-2"
             onClick={clearCart}
           >
             Clear Cart
