@@ -22,9 +22,9 @@ export default function Categories() {
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Product Categories</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {categories.map((category) => (
-          <Link href={`/category/${category.slug}`} key={category.slug}>
+          <Link href={`/category/${category}`} key={category}>
             <a className="bg-white shadow-md rounded-lg p-4 text-center hover:bg-blue-50 transition-colors duration-300">
-              <h2 className="text-lg font-semibold text-gray-800 capitalize">{category.name}</h2>
+              <h2 className="text-lg font-semibold text-gray-800 capitalize">{category}</h2>
             </a>
           </Link>
         ))}
