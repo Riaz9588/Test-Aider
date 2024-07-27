@@ -2,7 +2,7 @@
   "name": "nextjs-ecommerce",
   "version": "1.0.0",
   "description": "A Next.js e-commerce project",
-  "packageManager": "yarn@3.5.1",
+  "packageManager": "yarn@1.22.22",
   "engines": {
     "node": ">=14.0.0"
   },
