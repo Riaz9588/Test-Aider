@@ -7,23 +7,32 @@ import useCartStore from '../store/cartStore'
 export default function ProductList() {
   const [products, setProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const addItem = useCartStore((state) => state.addItem)
+
+  const productsPerPage = 12
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://dummyjson.com/products?limit=20')
+        const response = await axios.get(`https://dummyjson.com/products?limit=${productsPerPage}&skip=${(currentPage - 1) * productsPerPage}`)
         setProducts(response.data.products)
+        setTotalPages(Math.ceil(response.data.total / productsPerPage))
       } catch (error) {
         console.error('Error fetching products:', error)
       }
     }
     fetchProducts()
-  }, [])
+  }, [currentPage])
 
   const filteredProducts = products.filter(product =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage)
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -77,6 +86,27 @@ export default function ProductList() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="mt-8 flex justify-center">
+        <nav className="inline-flex rounded-md shadow">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </nav>
       </div>
     </div>
   )
