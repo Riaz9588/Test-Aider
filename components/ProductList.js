@@ -3,24 +3,29 @@ import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
 import useCartStore from '../store/cartStore'
+import SkeletonLoader from './SkeletonLoader'
 
 export default function ProductList() {
   const [products, setProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [loading, setLoading] = useState(true)
   const addItem = useCartStore((state) => state.addItem)
 
   const productsPerPage = 12
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true)
       try {
         const response = await axios.get(`https://dummyjson.com/products?limit=${productsPerPage}&skip=${(currentPage - 1) * productsPerPage}`)
         setProducts(response.data.products)
         setTotalPages(Math.ceil(response.data.total / productsPerPage))
       } catch (error) {
         console.error('Error fetching products:', error)
+      } finally {
+        setLoading(false)
       }
     }
     fetchProducts()
@@ -56,42 +61,46 @@ export default function ProductList() {
         <i className="fas fa-search absolute left-3 top-3 text-gray-400"></i>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {filteredProducts.map((product) => (
-          <div key={product.id} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-            <div className="relative h-48">
-              <Image 
-                src={product.thumbnail} 
-                alt={product.title}
-                layout="fill"
-                objectFit="cover"
-              />
-            </div>
-            <div className="p-4">
-              <Link href={`/products/${product.id}`}>
-                <a className="font-semibold text-lg mb-2 hover:text-blue-600 line-clamp-2">
-                  {product.title}
-                </a>
-              </Link>
-              <p className="text-gray-600 mb-2 flex items-center">
-                <i className="fas fa-tag mr-2 text-blue-500"></i>
-                ${product.price.toFixed(2)}
-              </p>
-              <button 
-                className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center"
-                onClick={() => addItem(product)}
-              >
-                <i className="fas fa-cart-plus mr-2"></i>
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        ))}
+        {loading
+          ? Array.from({ length: productsPerPage }).map((_, index) => (
+              <SkeletonLoader key={index} />
+            ))
+          : filteredProducts.map((product) => (
+              <div key={product.id} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                <div className="relative h-48">
+                  <Image 
+                    src={product.thumbnail} 
+                    alt={product.title}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <Link href={`/products/${product.id}`}>
+                    <a className="font-semibold text-lg mb-2 hover:text-blue-600 line-clamp-2">
+                      {product.title}
+                    </a>
+                  </Link>
+                  <p className="text-gray-600 mb-2 flex items-center">
+                    <i className="fas fa-tag mr-2 text-blue-500"></i>
+                    ${product.price.toFixed(2)}
+                  </p>
+                  <button 
+                    className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center"
+                    onClick={() => addItem(product)}
+                  >
+                    <i className="fas fa-cart-plus mr-2"></i>
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
       </div>
       <div className="mt-8 flex justify-center">
         <nav className="inline-flex rounded-md shadow">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || loading}
             className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
           >
             Previous
@@ -101,7 +110,7 @@ export default function ProductList() {
           </span>
           <button
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || loading}
             className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
           >
             Next
