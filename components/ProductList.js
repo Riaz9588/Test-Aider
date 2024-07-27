@@ -1,24 +1,43 @@
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-
-const products = [
-  { id: 1, name: 'Product 1', price: 9.99 },
-  { id: 2, name: 'Product 2', price: 19.99 },
-  { id: 3, name: 'Product 3', price: 29.99 },
-]
+import { Box, Grid, Heading, Button } from '@chakra-ui/react'
+import axios from 'axios'
+import useCartStore from '../store/cartStore'
 
 export default function ProductList() {
+  const [products, setProducts] = useState([])
+  const addItem = useCartStore((state) => state.addItem)
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('https://fakestoreapi.com/products')
+        setProducts(response.data)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+      }
+    }
+    fetchProducts()
+  }, [])
+
   return (
-    <div>
-      <h2>Our Products</h2>
-      <ul>
+    <Box>
+      <Heading as="h2" size="xl" mb={6}>Our Products</Heading>
+      <Grid templateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={6}>
         {products.map((product) => (
-          <li key={product.id}>
-            <Link href={`/products/${product.id}`}>
-              <a>{product.name} - ${product.price}</a>
+          <Box key={product.id} borderWidth="1px" borderRadius="lg" p={4}>
+            <Link href={`/products/${product.id}`} passHref>
+              <Box as="a" fontWeight="semibold" fontSize="lg" mb={2}>
+                {product.title}
+              </Box>
             </Link>
-          </li>
+            <Box>${product.price.toFixed(2)}</Box>
+            <Button colorScheme="blue" mt={2} onClick={() => addItem(product)}>
+              Add to Cart
+            </Button>
+          </Box>
         ))}
-      </ul>
-    </div>
+      </Grid>
+    </Box>
   )
 }
