@@ -44,6 +44,8 @@ export default function ProductSlider() {
                   alt={product.title}
                   layout="fill"
                   objectFit="cover"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
                   <h3 className="text-xl font-semibold">{product.title}</h3>

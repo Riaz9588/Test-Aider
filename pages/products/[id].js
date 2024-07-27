@@ -44,8 +44,15 @@ export default function Product() {
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="md:flex">
           <div className="md:flex-shrink-0">
-            <div className="relative h-96 w-full md:w-96">
-              <Image src={product.thumbnail} alt={product.title} layout="fill" objectFit="cover" />
+            <div className="relative h-96 w-full md:w-96 bg-gray-200">
+              <Image 
+                src={product.thumbnail} 
+                alt={product.title} 
+                layout="fill" 
+                objectFit="cover"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
+              />
             </div>
           </div>
           <div className="p-8">

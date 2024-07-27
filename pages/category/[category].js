@@ -47,12 +47,14 @@ export default function CategoryProducts() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <div key={product.id} className="bg-white shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-            <div className="relative h-48">
+            <div className="relative h-48 bg-gray-200">
               <Image 
                 src={product.thumbnail} 
                 alt={product.title}
                 layout="fill"
                 objectFit="cover"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
               />
             </div>
             <div className="p-4">

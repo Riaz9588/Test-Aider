@@ -16,8 +16,16 @@ export default function Cart() {
         <div className="space-y-6">
           {items.map((item) => (
             <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
-              <div className="relative h-16 w-16 flex-shrink-0">
-                <Image src={item.thumbnail} alt={item.title} layout="fill" objectFit="cover" className="rounded" />
+              <div className="relative h-16 w-16 flex-shrink-0 bg-gray-200">
+                <Image 
+                  src={item.thumbnail} 
+                  alt={item.title} 
+                  layout="fill" 
+                  objectFit="cover" 
+                  className="rounded"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
+                />
               </div>
               <div className="flex-grow">
                 <h3 className="font-semibold text-gray-800">{item.title}</h3>
