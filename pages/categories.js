@@ -30,7 +30,7 @@ export default function Categories() {
               <a className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative h-48">
                   <Image
-                    src={`https://source.unsplash.com/400x300/?${categoryName}`}
+                    src={`https://picsum.photos/seed/${categoryName}/400/300`}
                     alt={categoryName}
                     layout="fill"
                     objectFit="cover"
